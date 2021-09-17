@@ -2,10 +2,12 @@ package com.artelsv.petstudyapp.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.artelsv.petstudyapp.data.model.Movie
 import com.artelsv.petstudyapp.databinding.ItemMovieBinding
+import com.artelsv.petstudyapp.utils.DefaultDiffCallback
 
 class MovieAdapter(
     private val onClickListener: OnClickListener
@@ -14,7 +16,12 @@ class MovieAdapter(
     var data = listOf<Movie>()
         set(value) {
             field = value
-            notifyDataSetChanged()
+
+            val diffCallback = DefaultDiffCallback(field, value)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
+            diffResult.dispatchUpdatesTo(this)
+
+            field = value
         }
 
     class ViewHolder private constructor(
