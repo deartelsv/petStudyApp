@@ -12,7 +12,7 @@ class MoviesModule {
 
     @Singleton
     @Provides
-    fun providesBookRepository(moviesDatabase: MoviesDatabase, moviesService: MoviesService): MoviesRepositoryImpl {
+    fun providesMoviesRepository(moviesDatabase: MoviesDatabase, moviesService: MoviesService): MoviesRepositoryImpl {
         return MoviesRepositoryImpl(moviesDatabase, moviesService)
     }
 }

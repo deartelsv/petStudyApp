@@ -32,6 +32,9 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+//        App.instance.navigatorHolder.setNavigator(navigator)
+//        App.instance.router.navigateTo(FragmentScreen {  })
+
         setObservers(binding)
     }
 

@@ -1,6 +1,7 @@
 package com.artelsv.petstudyapp.di.module
 
 import com.artelsv.petstudyapp.data.network.MoviesService
+import com.artelsv.petstudyapp.data.network.UserService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -38,4 +39,8 @@ class NetworkModule {
     @Singleton
     @Provides
     fun provideMoviesService(retrofit: Retrofit) = retrofit.create(MoviesService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideUserService(retrofit: Retrofit) = retrofit.create(UserService::class.java)
 }
