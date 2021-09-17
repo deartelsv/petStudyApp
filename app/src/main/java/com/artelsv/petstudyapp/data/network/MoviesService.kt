@@ -5,8 +5,14 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import java.util.concurrent.Callable
 
+const val API_KEY = "2807255081825272abadbf4e147ca188"
+const val DEFAULT_LANG = "en-US"
+
 interface MoviesService {
 
-    @GET("movie/popular?api_key=2807255081825272abadbf4e147ca188&language=en-US&page=1")
+    @GET("movie/popular?api_key=$API_KEY&language=$DEFAULT_LANG&page=1")
     fun getPopularMovies() : Single<MovieResponse>
+
+    @GET("movie/now_playing?api_key=$API_KEY&language=$DEFAULT_LANG&page=1")
+    fun getNowPlayingMovies() : Single<MovieResponse>
 }

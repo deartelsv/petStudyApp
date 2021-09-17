@@ -14,7 +14,11 @@ import javax.inject.Inject
 
 class MoviesRepositoryImpl @Inject constructor(val moviesDatabase: MoviesDatabase, private val moviesService: MoviesService) : MoviesRepository {
 
-    override fun getMovies() : Single<MovieResponse> {
+    override fun getPopularMovies(): Single<MovieResponse> {
         return moviesService.getPopularMovies()
+    }
+
+    override fun getNowPlayingMovies(): Single<MovieResponse> {
+        return moviesService.getNowPlayingMovies()
     }
 }

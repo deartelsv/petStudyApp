@@ -5,5 +5,6 @@ import io.reactivex.Single
 
 interface MoviesRepository {
 
-    fun getMovies() : Single<MovieResponse>
+    fun getPopularMovies() : Single<MovieResponse>
+    fun getNowPlayingMovies() : Single<MovieResponse>
 }
