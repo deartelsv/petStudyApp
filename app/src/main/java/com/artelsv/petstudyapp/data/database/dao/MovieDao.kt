@@ -1,6 +1,7 @@
 package com.artelsv.petstudyapp.data.database.dao
 
 import androidx.room.*
+import androidx.room.OnConflictStrategy.IGNORE
 import com.artelsv.petstudyapp.data.model.Movie
 
 @Dao
@@ -8,7 +9,7 @@ interface MovieDao {
     @Insert
     fun addMovie(movie: Movie)
 
-    @Insert
+    @Insert(onConflict = IGNORE)
     fun addMovies(movies: List<Movie>)
 
     @Update
@@ -23,9 +24,12 @@ interface MovieDao {
 //    @Delete
 //    fun deleteMovie(position: Int)
 
-    @Query("SELECT * FROM movies WHERE movies.uid == :position")
+    @Query("SELECT * FROM movies WHERE movies.id == :position")
     fun getMovieAt(position: Int): Movie
 
     @Query("SELECT * FROM movies")
     fun getAllMovies(): List<Movie>
+
+    @Query("SELECT * FROM movies ORDER BY movies.voteAverage ASC")
+    fun getAllMoviesSortedByVote(): List<Movie>
 }

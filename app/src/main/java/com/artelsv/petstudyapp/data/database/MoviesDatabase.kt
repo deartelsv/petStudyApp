@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.artelsv.petstudyapp.data.database.dao.MovieDao
 import com.artelsv.petstudyapp.data.model.Movie
 
-@Database(entities = [Movie::class], version = 7)
+@Database(entities = [Movie::class], version = 8)
 @TypeConverters(DataConverter::class)
 abstract class MoviesDatabase : RoomDatabase(){
 

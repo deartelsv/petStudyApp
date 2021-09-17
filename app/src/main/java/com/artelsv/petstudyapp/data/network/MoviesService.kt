@@ -3,6 +3,7 @@ package com.artelsv.petstudyapp.data.network
 import com.artelsv.petstudyapp.data.network.model.MovieResponse
 import io.reactivex.Single
 import retrofit2.http.GET
+import java.util.concurrent.Callable
 
 interface MoviesService {
 

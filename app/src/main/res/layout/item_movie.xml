@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.artelsv.petstudyapp.data.model.Movie" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcv_movie"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:cardCornerRadius="16dp"
+        android:layout_marginBottom="16dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#33212121"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.title}"
+                android:textColor="@android:color/white"
+                android:layout_gravity="start|top"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.overview}"
+                android:textColor="@android:color/white"
+                android:layout_gravity="start|bottom"
+                android:maxLines="3"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_vote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{item.getVoteAsString}"
+                android:background="@drawable/background_vote"
+                android:layout_gravity="end|top"
+                android:singleLine="true"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"/>
+
+        </FrameLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
