@@ -3,7 +3,6 @@ package com.artelsv.petstudyapp.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.artelsv.petstudyapp.data.model.Movie
-import com.artelsv.petstudyapp.data.network.model.MovieResponse
 import com.artelsv.petstudyapp.data.repository.MoviesRepositoryImpl
 import io.reactivex.Single
 import io.reactivex.SingleObserver
@@ -15,59 +14,37 @@ class MoviesViewModel(private val moviesRepository: MoviesRepositoryImpl) : View
     val popularMovies = MutableLiveData<List<Movie>>(listOf())
     val nowPlayingMovies = MutableLiveData<List<Movie>>(listOf())
 
-    val loading = MutableLiveData(false)
+    val loading = MutableLiveData(true)
 
     init {
-        loading.postValue(true)
-        getPopularMovies()
-        getMoviesNowPlaying()
+        getMovies()
     }
 
-    private fun getPopularMovies() {
-        moviesRepository.getPopularMovies().subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .subscribe(object : SingleObserver<MovieResponse> {
-                override fun onSubscribe(d: Disposable) {
-//                    loading.postValue(true)
-                }
+    private fun getMovies() {
+        val newSingle = moviesRepository.getNowPlayingMovies()
+        val popularSingle = moviesRepository.getPopularMovies()
 
-                override fun onSuccess(t: MovieResponse) {
-                    val data = t.results
-                    moviesRepository.moviesDatabase.getMovieDao().addMovies(data)
+        Single.zip(newSingle, popularSingle, { new, popular ->
+            moviesRepository.moviesDatabase.getMovieDao().addMovies(new.results)
+            moviesRepository.moviesDatabase.getMovieDao().addMovies(popular.results)
 
-                    popularMovies.postValue(data.sortedBy { it.voteAverage })
+            nowPlayingMovies.postValue(new.results.sortedBy { it.voteAverage })
+            popularMovies.postValue(popular.results.sortedBy { it.voteAverage })
 
-                    popularMovies.value.isNullOrEmpty()
+            return@zip 1
+        }).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe(object : SingleObserver<Int> {
+            override fun onSubscribe(d: Disposable) {
 
-                    loading.postValue(!popularMovies.value.isNullOrEmpty() && !nowPlayingMovies.value.isNullOrEmpty())
-                }
+            }
 
-                override fun onError(e: Throwable) {
-//                    loading.postValue(false)
-                }
-            })
-    }
 
-    private fun getMoviesNowPlaying() {
-        moviesRepository.getNowPlayingMovies().subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.io())
-            .subscribe(object : SingleObserver<MovieResponse> {
-                override fun onSubscribe(d: Disposable) {
-//                    loading.postValue(true)
-                }
+            override fun onError(e: Throwable) {
+                loading.postValue(false)
+            }
 
-                override fun onSuccess(t: MovieResponse) {
-                    val data = t.results
-                    moviesRepository.moviesDatabase.getMovieDao().addMovies(data)
-
-                    nowPlayingMovies.postValue(data.sortedBy { it.voteAverage })
-
-                    loading.postValue(!popularMovies.value.isNullOrEmpty() && !nowPlayingMovies.value.isNullOrEmpty())
-                }
-
-                override fun onError(e: Throwable) {
-//                    loading.postValue(false)
-                }
-            })
+            override fun onSuccess(t: Int) {
+                loading.postValue(false)
+            }
+        })
     }
 }

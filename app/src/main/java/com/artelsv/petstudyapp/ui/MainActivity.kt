@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         App.instance.moviesComponent.inject(this)
 
         viewModel = ViewModelProvider(this, moviesViewModelFactory).get(MoviesViewModel::class.java)
+        binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         setObservers(binding)
