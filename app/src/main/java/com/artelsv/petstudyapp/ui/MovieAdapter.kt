@@ -15,8 +15,6 @@ class MovieAdapter(
 
     var data = listOf<Movie>()
         set(value) {
-            field = value
-
             val diffCallback = DefaultDiffCallback(field, value)
             val diffResult = DiffUtil.calculateDiff(diffCallback)
             diffResult.dispatchUpdatesTo(this)
