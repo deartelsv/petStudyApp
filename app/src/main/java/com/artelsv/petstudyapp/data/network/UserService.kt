@@ -10,12 +10,12 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface UserService {
-    @GET("/authentication/token/new$API_KEY")
+    @GET("/authentication/token/new")
     fun createRequestToken() : Single<RequestTokenResponse>
 
-    @POST("authentication/session/new$API_KEY")
+    @POST("authentication/session/new")
     fun createSession(@Body body: HashMap<*, *>) : Single<SessionResponse>
 
-    @POST("authentication/token/validate_with_login$API_KEY")
+    @POST("authentication/token/validate_with_login")
     fun createSessionWithUser(@Body body: HashMap<*, *>) : Single<SessionResponse>
 }

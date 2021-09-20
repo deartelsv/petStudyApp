@@ -1,4 +1,4 @@
-package com.artelsv.petstudyapp.data.model
+package com.artelsv.petstudyapp.domain.model
 
 import com.google.gson.annotations.SerializedName
 

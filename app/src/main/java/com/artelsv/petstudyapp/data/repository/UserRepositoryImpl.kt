@@ -8,7 +8,7 @@ import com.artelsv.petstudyapp.domain.UserRepository
 import io.reactivex.Single
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(val moviesDatabase: MoviesDatabase, private val userService: UserService) : UserRepository {
+class UserRepositoryImpl @Inject constructor(private val userService: UserService) : UserRepository {
     override fun createRequestToken(): Single<RequestTokenResponse> {
         return userService.createRequestToken()
     }

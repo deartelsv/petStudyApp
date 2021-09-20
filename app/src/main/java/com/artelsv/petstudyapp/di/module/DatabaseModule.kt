@@ -1,6 +1,7 @@
 package com.artelsv.petstudyapp.di.module
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -8,6 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.artelsv.petstudyapp.data.database.MoviesDatabase
 import dagger.Module
 import dagger.Provides
+import javax.inject.Inject
 import javax.inject.Singleton
 
 const val DATABASE_NAME = "movies_database"
@@ -26,15 +28,11 @@ class DatabaseModule(private val application: Application) {
 
     @Singleton
     @Provides
-    fun providesRoomDatabase(): MoviesDatabase {
-        moviesDatabase = Room.databaseBuilder(application, MoviesDatabase::class.java, DATABASE_NAME)
-            .fallbackToDestructiveMigration()
-            .addCallback(databaseCallback)
-            .build()
-        return moviesDatabase
-    }
+    fun providesRoomDatabase(): MoviesDatabase = Room.databaseBuilder(applicationContext, MoviesDatabase::class.java, DATABASE_NAME)
+        .fallbackToDestructiveMigration()
+        .addCallback(databaseCallback)
+        .build()
 
-    @Singleton
     @Provides
     fun providesMoviesDao(moviesDatabase: MoviesDatabase) = moviesDatabase.getMovieDao()
 }

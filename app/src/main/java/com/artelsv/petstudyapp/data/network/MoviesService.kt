@@ -10,9 +10,9 @@ const val DEFAULT_LANG = "en-US"
 
 interface MoviesService {
 
-    @GET("movie/popular?api_key=$API_KEY&language=$DEFAULT_LANG&page=1")
+    @GET("movie/popular?page=1")
     fun getPopularMovies() : Single<MovieResponse>
 
-    @GET("movie/now_playing?api_key=$API_KEY&language=$DEFAULT_LANG&page=1")
+    @GET("movie/now_playing?page=1")
     fun getNowPlayingMovies() : Single<MovieResponse>
 }

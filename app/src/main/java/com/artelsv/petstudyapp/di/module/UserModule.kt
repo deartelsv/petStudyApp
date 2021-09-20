@@ -1,8 +1,8 @@
 package com.artelsv.petstudyapp.di.module
 
-import com.artelsv.petstudyapp.data.database.MoviesDatabase
 import com.artelsv.petstudyapp.data.network.UserService
 import com.artelsv.petstudyapp.data.repository.UserRepositoryImpl
+import com.artelsv.petstudyapp.domain.UserRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -12,7 +12,7 @@ class UserModule {
 
     @Singleton
     @Provides
-    fun providesUserRepository(moviesDatabase: MoviesDatabase, userService: UserService): UserRepositoryImpl {
-        return UserRepositoryImpl(moviesDatabase, userService)
+    fun providesUserRepository(userService: UserService): UserRepository {
+        return UserRepositoryImpl(userService)
     }
 }

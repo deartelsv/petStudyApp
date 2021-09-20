@@ -1,10 +1,7 @@
 package com.artelsv.petstudyapp.data.database
 
 import androidx.room.TypeConverter
-import com.artelsv.petstudyapp.data.model.Company
-import com.artelsv.petstudyapp.data.model.Country
-import com.artelsv.petstudyapp.data.model.Genre
-import com.artelsv.petstudyapp.data.model.Language
+import com.artelsv.petstudyapp.domain.model.*
 import com.google.gson.reflect.TypeToken
 
 import com.google.gson.Gson
@@ -93,6 +90,26 @@ class DataConverter {
     }
 
     @TypeConverter
+    fun fromLanguage(companies: Language?): String? {
+        if (companies == null) {
+            return null
+        }
+        val gson = Gson()
+        val type: Type = object : TypeToken<Language?>() {}.type
+        return gson.toJson(companies, type)
+    }
+
+    @TypeConverter
+    fun toLanguage(languageString: String?): Language? {
+        if (languageString == null) {
+            return null
+        }
+        val gson = Gson()
+        val type: Type = object : TypeToken<List<Language>?>() {}.type
+        return gson.fromJson<Language>(languageString, type)
+    }
+
+    @TypeConverter
     fun fromGenreIdsList(genreIds: List<Int>?): String? {
         if (genreIds == null) {
             return null
@@ -111,4 +128,10 @@ class DataConverter {
         val type: Type = object : TypeToken<List<Int>?>() {}.type
         return gson.fromJson<List<Int>>(genreIds, type)
     }
+
+    @TypeConverter
+    fun toMovieType(value: Int) = enumValues<MovieType>()[value]
+
+    @TypeConverter
+    fun fromMovieType(value: MovieType) = value.ordinal
 }
